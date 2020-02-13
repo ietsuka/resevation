@@ -8,7 +8,7 @@ import axios from 'axios';
 Vue.use(VueRouter);
 Vue.use(VueAxios, axios);
 
-
+Vue.component('modal-component', require('./components/ModalComponent.vue'));
 Vue.component('index-component', require('./components/IndexComponent.vue').default);
 const app = new Vue({
     el: '#app',

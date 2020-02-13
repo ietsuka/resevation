@@ -16,4 +16,5 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => 'api'], function(){
     Route::get('get', 'ReservedInfoController@index');
     Route::post('post', 'ReservedInfoController@show');
+    Route::post('create', 'ReservedInfoController@create');
 });

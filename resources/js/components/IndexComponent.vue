@@ -1,9 +1,9 @@
 <template>
 <div>
   <div class="calendar-title">
-    <span class="btn-monthMove prev fa fa-angle-left" v-model="weeksMake"  v-on:click="movePrevWeek">←</span>
+    <button class="btn-monthMove prev fa fa-angle-left" v-model="weeksMake"  v-on:click="movePrevWeek">←</button>
      {{weeksMake}}
-    <span class="btn-monthMove next fa fa-angle-right" v-model="weeksMake" v-on:click="moveNextWeek">→</span>
+    <button class="btn-monthMove next fa fa-angle-right" v-model="weeksMake" v-on:click="moveNextWeek">→</button>
   </div>
   <div class="calendar-body">
     <tr class="calendar-body__item">
@@ -13,22 +13,31 @@
     <tr class="calendar-detail">
       <tr v-for="(time, index) in nums" :value="time" v-model="nums" class="calendar-detail__item">
         <td>{{time_low(index)}}</td>
-        <td v-for="point in time" class="target">{{point}}</td>
+        <td v-for="(point, v) in time" @click="showModal(index, v, point)" class="target">{{point}}</td>
       </tr>
     </tr>
   </div>
+  <modal-component v-show="showContent" v-on:from-child="closeModal" :date=positionDate :time=positionTime :startDate=date></modal-component>
 </div>
 </template>
 
 <script>
+  import modal from './ModalComponent.vue'
+  import Vue from 'vue';
   export default {
+    components:{
+      'modal-component':modal
+    },
     data(){
       return {
         date: null,
         dt: null,
         weeks: null,
         weekly: null,
-        nums: null
+        nums: null,
+        showContent: false,
+        positionTime: null,
+        positionDate: null
       }
     },
     mounted() {
@@ -88,11 +97,23 @@
         .catch(function(error){
 
         });
+      },
+      showModal(number, date, value){
+        if(!value){
+          this.showContent = true;
+          this.positionTime = number;
+          this.positionDate = date;
+        }else{
+          alert('すでに予約されています。');
+        }
+      },
+      closeModal(){
+        this.showContent = false;
+        window.location.reload();
       }
     },
     computed:{
       weeksMake(){
-        console.log(this.date);
         var dt = new Date(this.date);
         var weekly = [];
         var ary = ["日","月","火","水","木","金","土"];
@@ -115,6 +136,8 @@
 <style lang="stylus">
 .calendar-title{
   text-align: center;
+  height: 45px;
+  font-size: larger;
 }
 .calendar-body{
   width:100%;
