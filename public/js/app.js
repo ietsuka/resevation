@@ -1908,14 +1908,12 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1938,7 +1936,10 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      date: null,
+      dt: null,
       weeks: null,
+      weekly: null,
       nums: null
     };
   },
@@ -1946,21 +1947,70 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     var _this = this;
 
     axios.get('/api/get').then(function (response) {
-      _this.weeks = response.data.weekly;
-      _this.nums = response.data.nums;
+      _this.nums = response.data.nums, _this.date = response.data.from;
     });
   },
   methods: {
-    chekcSelectedDay: function chekcSelectedDay(time) {
-      var time_low = _toConsumableArray(Array(8)).map(function (i) {
-        return " ";
-      });
+    time_low: function time_low(index) {
+      var TimesEnum = {
+        0: "07:00",
+        1: "08:00",
+        2: "09:00",
+        3: "10:00",
+        4: "11:00",
+        5: "12:00",
+        6: "13:00",
+        7: "14:00",
+        8: "15:00",
+        9: "16:00",
+        10: "17:00",
+        11: "18:00",
+        12: "19:00",
+        13: "20:00",
+        14: "21:00"
+      };
+      return TimesEnum[index];
+    },
+    moveNextWeek: function moveNextWeek() {
+      var url = '/api/post';
+      var params = {
+        date: this.date,
+        direct: 'next'
+      };
+      axios.post(url, params).then(function (response) {
+        this.nums = response.data.nums;
+        this.date = response.data.date;
+      }.bind(this))["catch"](function (error) {});
+    },
+    movePrevWeek: function movePrevWeek() {
+      var url = '/api/post';
+      var params = {
+        date: this.date,
+        direct: 'prev'
+      };
+      axios.post(url, params).then(function (response) {
+        this.nums = response.data.nums;
+        this.date = response.data.date;
+      }.bind(this))["catch"](function (error) {});
+    }
+  },
+  computed: {
+    weeksMake: function weeksMake() {
+      console.log(this.date);
+      var dt = new Date(this.date);
+      var weekly = [];
+      var ary = ["日", "月", "火", "水", "木", "金", "土"];
 
-      time_low.splice(0, 1, '11:00');
-      Object.keys(time).forEach(function (val) {
-        time_low.splice(time[val], 1, '●');
-      });
-      return time_low;
+      for (var i = 0; i < 7; i++) {
+        var month = dt.getMonth() + 1;
+        var date = dt.getDate();
+        var day = ary[dt.getDay()];
+        dt.setDate(dt.getDate() + 1);
+        weekly[i] = month + '/' + date + '(' + day + ')';
+      }
+
+      this.weekly = weekly;
+      return weekly[0] + '~' + weekly[6];
     }
   }
 });
@@ -1979,7 +2029,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".calendar-title {\n  text-align: center;\n}\n.calendar-body {\n  width: 100%;\n  table-layout: fixed;\n  margin-bottom: 20px;\n  color: #565656;\n  font-size: 1.1rem;\n  text-align: center;\n}\n.calendar-body__item {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n}\n.calendar-body__item div {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 12px;\n}\n.calendar-body__item div:nth-of-type(8n-1) {\n  color: #5a66a8;\n}\n.calendar-body__item div:nth-of-type(8n) {\n  color: #e29a9b;\n}\n.calendar-body__item div div {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 17px;\n}\n.calendar-body__item div.holidays {\n  color: #e29a9b;\n}\n.calendar-detail {\n  width: 100%;\n  table-layout: fixed;\n  margin-bottom: 20px;\n  color: #565656;\n  font-size: 1.1rem;\n  text-align: center;\n}\n.calendar-detail__item {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n}\n.calendar-detail__item div {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 20px;\n}\n", ""]);
+exports.push([module.i, ".calendar-title {\n  text-align: center;\n}\n.calendar-body {\n  width: 100%;\n  table-layout: fixed;\n  margin-bottom: 20px;\n  color: #565656;\n  font-size: 1.1rem;\n  text-align: center;\n}\n.calendar-body__item {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n}\n.calendar-body__item th {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 12px;\n  border: ridge;\n}\n.calendar-body__item th td {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 17px;\n  border: ridge;\n}\n.calendar-detail {\n  width: 100%;\n  table-layout: fixed;\n  margin-bottom: 20px;\n  color: #565656;\n  font-size: 1.1rem;\n  text-align: center;\n}\n.calendar-detail__item {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n}\n.calendar-detail__item td {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 20px;\n  border: ridge;\n}\n", ""]);
 
 // exports
 
@@ -20229,38 +20279,100 @@ var render = function() {
       _vm._v("\n    2020年2月のカレンダー\n  ")
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "calendar-body" }, [
+    _c("div", { staticClass: "calendar-title" }, [
       _c(
-        "div",
-        { staticClass: "calendar-body__item" },
-        [
-          _c("div"),
-          _vm._v(" "),
-          _vm._l(_vm.weeks, function(day) {
-            return _c("div", { staticClass: "day" }, [_vm._v(_vm._s(day))])
-          })
-        ],
-        2
+        "span",
+        {
+          staticClass: "btn-monthMove prev fa fa-angle-left",
+          on: { click: _vm.movePrevWeek },
+          model: {
+            value: _vm.weeksMake,
+            callback: function($$v) {
+              _vm.weeksMake = $$v
+            },
+            expression: "weeksMake"
+          }
+        },
+        [_vm._v("←")]
       ),
-      _vm._v(" "),
+      _vm._v("\n     " + _vm._s(_vm.weeksMake) + "\n    "),
       _c(
-        "div",
-        { staticClass: "calendar-detail" },
-        _vm._l(_vm.nums, function(time) {
-          return _c(
-            "div",
-            { staticClass: "calendar-detail__item", attrs: { value: time } },
-            _vm._l(_vm.chekcSelectedDay(time), function(point) {
-              return _c("div", { staticClass: "target" }, [
-                _vm._v(_vm._s(point))
-              ])
-            }),
-            0
-          )
-        }),
-        0
+        "span",
+        {
+          staticClass: "btn-monthMove next fa fa-angle-right",
+          on: { click: _vm.moveNextWeek },
+          model: {
+            value: _vm.weeksMake,
+            callback: function($$v) {
+              _vm.weeksMake = $$v
+            },
+            expression: "weeksMake"
+          }
+        },
+        [_vm._v("→")]
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "calendar-body" },
+      [
+        _c(
+          "tr",
+          { staticClass: "calendar-body__item" },
+          [
+            _c("th"),
+            _vm._v(" "),
+            _vm._l(_vm.weekly, function(day) {
+              return _c(
+                "th",
+                {
+                  staticClass: "day",
+                  model: {
+                    value: _vm.weekly,
+                    callback: function($$v) {
+                      _vm.weekly = $$v
+                    },
+                    expression: "weekly"
+                  }
+                },
+                [_vm._v(_vm._s(day))]
+              )
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c("tr", { staticClass: "calendar-detail" }),
+        _vm._l(_vm.nums, function(time, index) {
+          return _c(
+            "tr",
+            {
+              staticClass: "calendar-detail__item",
+              attrs: { value: time },
+              model: {
+                value: _vm.nums,
+                callback: function($$v) {
+                  _vm.nums = $$v
+                },
+                expression: "nums"
+              }
+            },
+            [
+              _c("td", [_vm._v(_vm._s(_vm.time_low(index)))]),
+              _vm._v(" "),
+              _vm._l(time, function(point) {
+                return _c("td", { staticClass: "target" }, [
+                  _vm._v(_vm._s(point))
+                ])
+              })
+            ],
+            2
+          )
+        })
+      ],
+      2
+    )
   ])
 }
 var staticRenderFns = []

@@ -1,18 +1,21 @@
 <template>
 <div>
-  <h1 class="h5 mb-4">
-    2020年2月のカレンダー
-  </h1>
+  <div class="calendar-title">
+    <span class="btn-monthMove prev fa fa-angle-left" v-model="weeksMake"  v-on:click="movePrevWeek">←</span>
+     {{weeksMake}}
+    <span class="btn-monthMove next fa fa-angle-right" v-model="weeksMake" v-on:click="moveNextWeek">→</span>
+  </div>
   <div class="calendar-body">
-    <div class="calendar-body__item">
-      <div> </div>
-      <div v-for="day in weeks" class="day">{{day}}</div>
-    </div>
-    <div class="calendar-detail">
-      <div v-for="time in nums" :value="time" class="calendar-detail__item">
-        <div v-for="point in chekcSelectedDay(time)" class="target">{{point}}</div>
-      </div>
-    </div>
+    <tr class="calendar-body__item">
+      <th> </th>
+      <th v-for="day in weekly" v-model="weekly" class="day">{{day}}</th>
+    </tr>
+    <tr class="calendar-detail">
+      <tr v-for="(time, index) in nums" :value="time" v-model="nums" class="calendar-detail__item">
+        <td>{{time_low(index)}}</td>
+        <td v-for="point in time" class="target">{{point}}</td>
+      </tr>
+    </tr>
   </div>
 </div>
 </template>
@@ -21,26 +24,90 @@
   export default {
     data(){
       return {
+        date: null,
+        dt: null,
         weeks: null,
+        weekly: null,
         nums: null
       }
     },
     mounted() {
       axios.get('/api/get')
       .then(response => {
-        this.weeks = response.data.weekly;
-        this.nums = response.data.nums;
+        this.nums = response.data.nums,
+        this.date = response.data.from
       })
     },
     methods:{
-      chekcSelectedDay(time){
-        const time_low = [...Array(8)].map(i=>" ");
-        time_low.splice(0, 1, '11:00');
-        Object.keys(time).forEach(function(val) {
-          time_low.splice(time[val], 1, '●')
-        });
-        return time_low;
+      time_low(index){
+        var TimesEnum = {
+          0: "07:00",
+          1: "08:00",
+          2: "09:00",
+          3: "10:00",
+          4: "11:00",
+          5: "12:00",
+          6: "13:00",
+          7: "14:00",
+          8: "15:00",
+          9: "16:00",
+          10: "17:00",
+          11: "18:00",
+          12: "19:00",
+          13: "20:00",
+          14: "21:00"
+        };
+        return TimesEnum[index];
       },
+      moveNextWeek(){
+        var url = '/api/post';
+        var params = {
+          date: this.date,
+          direct: 'next'
+        };
+        axios.post(url, params)
+        .then(function(response){
+          this.nums = response.data.nums;
+          this.date = response.data.date;
+        }.bind(this))
+        .catch(function(error){
+
+        });
+      },
+      movePrevWeek(){
+        var url = '/api/post';
+        var params = {
+          date: this.date,
+          direct: 'prev'
+        };
+        axios.post(url, params)
+        .then(function(response){
+          this.nums = response.data.nums;
+          this.date = response.data.date;
+        }.bind(this))
+        .catch(function(error){
+
+        });
+      }
+    },
+    computed:{
+      weeksMake(){
+        console.log(this.date);
+        var dt = new Date(this.date);
+        var weekly = [];
+        var ary = ["日","月","火","水","木","金","土"];
+        for(var i = 0; i < 7; i++) {
+          var month = dt.getMonth() + 1;
+          var date = dt.getDate();
+          var day = ary[dt.getDay()];
+
+          dt.setDate(dt.getDate() + 1);
+          weekly[i] = month+'/'+date+'('+day+')';
+        }
+
+        this.weekly = weekly;
+        return weekly[0] +'~'+ weekly[6];
+      }
     }
   }
 </script>
@@ -59,7 +126,7 @@
   &__item{
     display: flex;
     flex-wrap: wrap;
-    div{
+    th{
       box-sizing: border-box;
       width: 12.28%;
       height: 48px;
@@ -68,13 +135,8 @@
       text-align: center;
       cursor:pointer;
       font-size: 12px;
-      &:nth-of-type(8n-1){
-        color: #5a66a8;
-      }
-      &:nth-of-type(8n){
-        color:#e29a9b;
-      }
-      div{
+      border: ridge;
+      td{
         box-sizing: border-box;
         width: 12.28%;
         height: 48px;
@@ -83,9 +145,7 @@
         text-align: center;
         cursor:pointer;
         font-size: 17px;
-      }
-      &.holidays{
-         color: #e29a9b;
+        border: ridge;
       }
     }
   }
@@ -101,7 +161,7 @@
   &__item{
     display: flex;
     flex-wrap: wrap;
-    div{
+    td{
       box-sizing: border-box;
       width: 12.28%;
       height: 48px;
@@ -110,6 +170,7 @@
       text-align: center;
       cursor:pointer;
       font-size: 20px;
+      border: ridge;
     }
   }
 }
