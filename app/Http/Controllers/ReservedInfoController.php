@@ -28,15 +28,21 @@ class ReservedInfoController extends Controller
       $prevDate = ReservedInfo::whereBetween('reserved_date', [$end, $start])->pluck('reserved_date')->toArray();
       $prevTime = ReservedInfo::whereBetween('reserved_date', [$end, $start])->pluck('reserved_time')->toArray();
       $nums = Util::calc($prevDate, $prevTime);
-    }else{
+    }elseif($direct == 'next') {
       $start = date("Y/m/d", strtotime($date));
       $end = date("Y/m/d", strtotime($start.'+1 week'));
       $nextEnd = date("Y/m/d", strtotime($end.'+1 week'));
       $nextDate = ReservedInfo::whereBetween('reserved_date', [$end, $nextEnd])->pluck('reserved_date')->toArray();
       $nextTime = ReservedInfo::whereBetween('reserved_date', [$end, $nextEnd])->pluck('reserved_time')->toArray();
       $nums = Util::calc($nextDate, $nextTime);
+    }else{
+      $start = date("Y/m/d", strtotime($date));
+      $end = date("Y/m/d", strtotime($start.'+1 week'));
+      $Date = ReservedInfo::whereBetween('reserved_date', [$start, $end])->pluck('reserved_date')->toArray();
+      $Time = ReservedInfo::whereBetween('reserved_date', [$start, $end])->pluck('reserved_time')->toArray();
+      $nums = Util::calc($Date, $Time);
     }
-    return response()->json(['nums'=> $nums, 'date'=> $end]);
+    return response()->json(['nums'=> $nums, 'date'=> $start]);
   }
 
   public function create(Request $request) {

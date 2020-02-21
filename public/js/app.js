@@ -1911,6 +1911,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ModalComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModalComponent.vue */ "./resources/js/components/ModalComponent.vue");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dayjs */ "./node_modules/dayjs/dayjs.min.js");
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_2__);
 //
 //
 //
@@ -1934,6 +1936,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1949,7 +1967,8 @@ __webpack_require__.r(__webpack_exports__);
       nums: null,
       showContent: false,
       positionTime: null,
-      positionDate: null
+      positionDate: null,
+      three_month: null
     };
   },
   mounted: function mounted() {
@@ -2014,6 +2033,18 @@ __webpack_require__.r(__webpack_exports__);
     closeModal: function closeModal() {
       this.showContent = false;
       window.location.reload();
+    },
+    select: function select(select_date) {
+      var url = '/api/post';
+      console.log(select_date);
+      var params = {
+        date: select_date,
+        direct: ''
+      };
+      axios.post(url, params).then(function (response) {
+        this.nums = response.data.nums;
+        this.date = response.data.date;
+      }.bind(this))["catch"](function (error) {});
     }
   },
   computed: {
@@ -2032,6 +2063,17 @@ __webpack_require__.r(__webpack_exports__);
 
       this.weekly = weekly;
       return weekly[0] + '~' + weekly[6];
+    },
+    selectDate: function selectDate() {
+      var three_month = [];
+
+      for (var i = 0; i < 180; i++) {
+        var day = dayjs__WEBPACK_IMPORTED_MODULE_2___default()().add(i, 'day').format('YYYY/MM/DD');
+        three_month[i] = day;
+      }
+
+      this.three_month = three_month;
+      return this.three_month;
     }
   }
 });
@@ -2171,7 +2213,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".calendar-title {\n  text-align: center;\n  height: 45px;\n  font-size: larger;\n}\n.calendar-body {\n  width: 100%;\n  table-layout: fixed;\n  margin-bottom: 20px;\n  color: #565656;\n  font-size: 1.1rem;\n  text-align: center;\n}\n.calendar-body__item {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n}\n.calendar-body__item th {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 12px;\n  border: ridge;\n}\n.calendar-body__item th td {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 17px;\n  border: ridge;\n}\n.calendar-detail {\n  width: 100%;\n  table-layout: fixed;\n  margin-bottom: 20px;\n  color: #565656;\n  font-size: 1.1rem;\n  text-align: center;\n}\n.calendar-detail__item {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n}\n.calendar-detail__item td {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 20px;\n  border: ridge;\n}\n", ""]);
+exports.push([module.i, ".calendar-title {\n  font-family: fantasy;\n  text-align: center;\n  height: 60px;\n  font-size: 35px;\n}\n.calendar-content {\n  text-align: center;\n  height: 45px;\n  font-size: larger;\n  display: contents;\n}\n.calendar-content .calendar-function {\n  display: -webkit-inline-box;\n  display: inline-flex;\n  margin: 0px 382px;\n}\n.calendar-content p {\n  font-family: monospace;\n}\n.calendar-content button {\n  width: 25px;\n  height: 20px;\n  margin-top: 17px;\n}\n#search {\n  margin-left: auto;\n}\n#search .menu {\n  position: relative;\n  width: 460px;\n  height: 0px;\n  max-width: 1000px;\n  margin: 0 auto;\n}\n#button {\n  margin-right: auto;\n}\n.menu > li {\n  border-radius: 5px;\n  float: left;\n  width: 25%;\n  height: 50px;\n  line-height: 50px;\n  background: #3c6699;\n  list-style: none;\n}\n.menu > li a {\n  display: block;\n  color: #fff;\n  text-decoration: none;\n}\n.menu > li a:hover {\n  color: #fff;\n}\nul.menu__second-level {\n  visibility: hidden;\n  opacity: 0;\n  z-index: 1;\n  list-style: none;\n  height: auto;\n  max-height: 500px;\n  overflow-x: scroll;\n}\n.menu > li:hover {\n  background: #3c6699;\n  -webkit-transition: all 0.5s;\n  transition: all 0.5s;\n}\n.menu__second-level li {\n  border-top: 1px solid #258;\n}\n.menu__second-level li a:hover {\n  background: #3c6699;\n}\n.init-bottom:after {\n  content: '';\n  display: inline-block;\n  width: 6px;\n  height: 6px;\n  margin: 0 0 0 15px;\n  border-right: 1px solid #fff;\n  border-bottom: 1px solid #fff;\n  -webkit-transform: rotate(45deg);\n  transform: rotate(45deg);\n}\n/* floatクリア */\n.menu:before,\n.menu:after {\n  content: \" \";\n  display: table;\n}\n.menu:after {\n  clear: both;\n}\n.menu {\n  *zoom: 1;\n}\n.menu {\n  position: relative;\n  width: 100%;\n  height: 50px;\n  max-width: 1000px;\n  margin: 0 auto;\n}\n.menu > li.menu__single {\n  position: relative;\n  width: 120px;\n}\nli.menu__single ul.menu__second-level {\n  position: absolute;\n  top: 40px;\n  width: 100%;\n  background: #3c6699;\n  -webkit-transition: all 0.2s ease;\n  transition: all 0.2s ease;\n  padding-left: unset;\n}\nli.menu__single:hover ul.menu__second-level {\n  top: 50px;\n  visibility: visible;\n  opacity: 1;\n  color: #fff;\n}\n.calendar-body {\n  width: 100%;\n  table-layout: fixed;\n  margin-bottom: 20px;\n  color: #565656;\n  font-size: 1.1rem;\n  text-align: center;\n}\n.calendar-body__item {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n}\n.calendar-body__item th {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 12px;\n  border: 1px solid #3c6699;\n  background: -webkit-gradient(linear, left top, left bottom, from(#829ebc), to(#258));\n  background: linear-gradient(#829ebc, #258);\n  color: #fff;\n  border-radius: 5px;\n  font-family: monospace;\n}\n.calendar-body__item th td {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 17px;\n  border: ridge;\n}\n.calendar-detail {\n  width: 100%;\n  table-layout: fixed;\n  margin-bottom: 20px;\n  color: #565656;\n  font-size: 1.1rem;\n  text-align: center;\n}\n.calendar-detail__item {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n  font-family: monospace;\n}\n.calendar-detail__item td {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 20px;\n  border: 1px solid #1b2538;\n  border-radius: 5px;\n}\n", ""]);
 
 // exports
 
@@ -2280,6 +2322,18 @@ function toComment(sourceMap) {
 
 	return '/*# ' + data + ' */';
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/dayjs/dayjs.min.js":
+/*!*****************************************!*\
+  !*** ./node_modules/dayjs/dayjs.min.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(t,n){ true?module.exports=n():undefined}(this,function(){"use strict";var t="millisecond",n="second",e="minute",r="hour",i="day",s="week",u="month",o="quarter",a="year",h=/^(\d{4})-?(\d{1,2})-?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?.?(\d{1,3})?$/,f=/\[([^\]]+)]|Y{2,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g,c=function(t,n,e){var r=String(t);return!r||r.length>=n?t:""+Array(n+1-r.length).join(e)+t},d={s:c,z:function(t){var n=-t.utcOffset(),e=Math.abs(n),r=Math.floor(e/60),i=e%60;return(n<=0?"+":"-")+c(r,2,"0")+":"+c(i,2,"0")},m:function(t,n){var e=12*(n.year()-t.year())+(n.month()-t.month()),r=t.clone().add(e,u),i=n-r<0,s=t.clone().add(e+(i?-1:1),u);return Number(-(e+(n-r)/(i?r-s:s-r))||0)},a:function(t){return t<0?Math.ceil(t)||0:Math.floor(t)},p:function(h){return{M:u,y:a,w:s,d:i,h:r,m:e,s:n,ms:t,Q:o}[h]||String(h||"").toLowerCase().replace(/s$/,"")},u:function(t){return void 0===t}},$={name:"en",weekdays:"Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"),months:"January_February_March_April_May_June_July_August_September_October_November_December".split("_")},l="en",m={};m[l]=$;var y=function(t){return t instanceof v},M=function(t,n,e){var r;if(!t)return l;if("string"==typeof t)m[t]&&(r=t),n&&(m[t]=n,r=t);else{var i=t.name;m[i]=t,r=i}return e||(l=r),r},g=function(t,n,e){if(y(t))return t.clone();var r=n?"string"==typeof n?{format:n,pl:e}:n:{};return r.date=t,new v(r)},D=d;D.l=M,D.i=y,D.w=function(t,n){return g(t,{locale:n.$L,utc:n.$u,$offset:n.$offset})};var v=function(){function c(t){this.$L=this.$L||M(t.locale,null,!0),this.parse(t)}var d=c.prototype;return d.parse=function(t){this.$d=function(t){var n=t.date,e=t.utc;if(null===n)return new Date(NaN);if(D.u(n))return new Date;if(n instanceof Date)return new Date(n);if("string"==typeof n&&!/Z$/i.test(n)){var r=n.match(h);if(r)return e?new Date(Date.UTC(r[1],r[2]-1,r[3]||1,r[4]||0,r[5]||0,r[6]||0,r[7]||0)):new Date(r[1],r[2]-1,r[3]||1,r[4]||0,r[5]||0,r[6]||0,r[7]||0)}return new Date(n)}(t),this.init()},d.init=function(){var t=this.$d;this.$y=t.getFullYear(),this.$M=t.getMonth(),this.$D=t.getDate(),this.$W=t.getDay(),this.$H=t.getHours(),this.$m=t.getMinutes(),this.$s=t.getSeconds(),this.$ms=t.getMilliseconds()},d.$utils=function(){return D},d.isValid=function(){return!("Invalid Date"===this.$d.toString())},d.isSame=function(t,n){var e=g(t);return this.startOf(n)<=e&&e<=this.endOf(n)},d.isAfter=function(t,n){return g(t)<this.startOf(n)},d.isBefore=function(t,n){return this.endOf(n)<g(t)},d.$g=function(t,n,e){return D.u(t)?this[n]:this.set(e,t)},d.year=function(t){return this.$g(t,"$y",a)},d.month=function(t){return this.$g(t,"$M",u)},d.day=function(t){return this.$g(t,"$W",i)},d.date=function(t){return this.$g(t,"$D","date")},d.hour=function(t){return this.$g(t,"$H",r)},d.minute=function(t){return this.$g(t,"$m",e)},d.second=function(t){return this.$g(t,"$s",n)},d.millisecond=function(n){return this.$g(n,"$ms",t)},d.unix=function(){return Math.floor(this.valueOf()/1e3)},d.valueOf=function(){return this.$d.getTime()},d.startOf=function(t,o){var h=this,f=!!D.u(o)||o,c=D.p(t),d=function(t,n){var e=D.w(h.$u?Date.UTC(h.$y,n,t):new Date(h.$y,n,t),h);return f?e:e.endOf(i)},$=function(t,n){return D.w(h.toDate()[t].apply(h.toDate(),(f?[0,0,0,0]:[23,59,59,999]).slice(n)),h)},l=this.$W,m=this.$M,y=this.$D,M="set"+(this.$u?"UTC":"");switch(c){case a:return f?d(1,0):d(31,11);case u:return f?d(1,m):d(0,m+1);case s:var g=this.$locale().weekStart||0,v=(l<g?l+7:l)-g;return d(f?y-v:y+(6-v),m);case i:case"date":return $(M+"Hours",0);case r:return $(M+"Minutes",1);case e:return $(M+"Seconds",2);case n:return $(M+"Milliseconds",3);default:return this.clone()}},d.endOf=function(t){return this.startOf(t,!1)},d.$set=function(s,o){var h,f=D.p(s),c="set"+(this.$u?"UTC":""),d=(h={},h[i]=c+"Date",h.date=c+"Date",h[u]=c+"Month",h[a]=c+"FullYear",h[r]=c+"Hours",h[e]=c+"Minutes",h[n]=c+"Seconds",h[t]=c+"Milliseconds",h)[f],$=f===i?this.$D+(o-this.$W):o;if(f===u||f===a){var l=this.clone().set("date",1);l.$d[d]($),l.init(),this.$d=l.set("date",Math.min(this.$D,l.daysInMonth())).toDate()}else d&&this.$d[d]($);return this.init(),this},d.set=function(t,n){return this.clone().$set(t,n)},d.get=function(t){return this[D.p(t)]()},d.add=function(t,o){var h,f=this;t=Number(t);var c=D.p(o),d=function(n){var e=g(f);return D.w(e.date(e.date()+Math.round(n*t)),f)};if(c===u)return this.set(u,this.$M+t);if(c===a)return this.set(a,this.$y+t);if(c===i)return d(1);if(c===s)return d(7);var $=(h={},h[e]=6e4,h[r]=36e5,h[n]=1e3,h)[c]||1,l=this.$d.getTime()+t*$;return D.w(l,this)},d.subtract=function(t,n){return this.add(-1*t,n)},d.format=function(t){var n=this;if(!this.isValid())return"Invalid Date";var e=t||"YYYY-MM-DDTHH:mm:ssZ",r=D.z(this),i=this.$locale(),s=this.$H,u=this.$m,o=this.$M,a=i.weekdays,h=i.months,c=function(t,r,i,s){return t&&(t[r]||t(n,e))||i[r].substr(0,s)},d=function(t){return D.s(s%12||12,t,"0")},$=i.meridiem||function(t,n,e){var r=t<12?"AM":"PM";return e?r.toLowerCase():r},l={YY:String(this.$y).slice(-2),YYYY:this.$y,M:o+1,MM:D.s(o+1,2,"0"),MMM:c(i.monthsShort,o,h,3),MMMM:h[o]||h(this,e),D:this.$D,DD:D.s(this.$D,2,"0"),d:String(this.$W),dd:c(i.weekdaysMin,this.$W,a,2),ddd:c(i.weekdaysShort,this.$W,a,3),dddd:a[this.$W],H:String(s),HH:D.s(s,2,"0"),h:d(1),hh:d(2),a:$(s,u,!0),A:$(s,u,!1),m:String(u),mm:D.s(u,2,"0"),s:String(this.$s),ss:D.s(this.$s,2,"0"),SSS:D.s(this.$ms,3,"0"),Z:r};return e.replace(f,function(t,n){return n||l[t]||r.replace(":","")})},d.utcOffset=function(){return 15*-Math.round(this.$d.getTimezoneOffset()/15)},d.diff=function(t,h,f){var c,d=D.p(h),$=g(t),l=6e4*($.utcOffset()-this.utcOffset()),m=this-$,y=D.m(this,$);return y=(c={},c[a]=y/12,c[u]=y,c[o]=y/3,c[s]=(m-l)/6048e5,c[i]=(m-l)/864e5,c[r]=m/36e5,c[e]=m/6e4,c[n]=m/1e3,c)[d]||m,f?y:D.a(y)},d.daysInMonth=function(){return this.endOf(u).$D},d.$locale=function(){return m[this.$L]},d.locale=function(t,n){if(!t)return this.$L;var e=this.clone(),r=M(t,n,!0);return r&&(e.$L=r),e},d.clone=function(){return D.w(this.$d,this)},d.toDate=function(){return new Date(this.valueOf())},d.toJSON=function(){return this.isValid()?this.toISOString():null},d.toISOString=function(){return this.$d.toISOString()},d.toString=function(){return this.$d.toUTCString()},c}();return g.prototype=v.prototype,g.extend=function(t,n){return t(n,v,g),g},g.locale=M,g.isDayjs=y,g.unix=function(t){return g(1e3*t)},g.en=m[l],g.Ls=m,g});
 
 
 /***/ }),
@@ -20469,36 +20523,81 @@ var render = function() {
     "div",
     [
       _c("div", { staticClass: "calendar-title" }, [
+        _vm._v("\n    予約画面\n  ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "calendar-content" }, [
         _c(
-          "button",
-          {
-            staticClass: "btn-monthMove prev fa fa-angle-left",
-            on: { click: _vm.movePrevWeek },
-            model: {
-              value: _vm.weeksMake,
-              callback: function($$v) {
-                _vm.weeksMake = $$v
-              },
-              expression: "weeksMake"
-            }
-          },
-          [_vm._v("←")]
+          "div",
+          { staticClass: "calendar-function", attrs: { id: "search" } },
+          [
+            _c("ul", { staticClass: "menu" }, [
+              _c("li", { staticClass: "menu__single" }, [
+                _c("a", { staticClass: "init-bottom", attrs: { href: "#" } }, [
+                  _vm._v("指定日付")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "ul",
+                  { staticClass: "menu__second-level" },
+                  _vm._l(_vm.selectDate, function(date) {
+                    return _c(
+                      "li",
+                      {
+                        on: {
+                          click: function($event) {
+                            return _vm.select(date)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(date))]
+                    )
+                  }),
+                  0
+                )
+              ])
+            ])
+          ]
         ),
-        _vm._v("\n     " + _vm._s(_vm.weeksMake) + "\n    "),
+        _vm._v(" "),
         _c(
-          "button",
-          {
-            staticClass: "btn-monthMove next fa fa-angle-right",
-            on: { click: _vm.moveNextWeek },
-            model: {
-              value: _vm.weeksMake,
-              callback: function($$v) {
-                _vm.weeksMake = $$v
+          "div",
+          { staticClass: "calendar-function", attrs: { id: "button" } },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn-monthMove prev fa fa-angle-left",
+                on: { click: _vm.movePrevWeek },
+                model: {
+                  value: _vm.weeksMake,
+                  callback: function($$v) {
+                    _vm.weeksMake = $$v
+                  },
+                  expression: "weeksMake"
+                }
               },
-              expression: "weeksMake"
-            }
-          },
-          [_vm._v("→")]
+              [_vm._v("←")]
+            ),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.weeksMake))]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn-monthMove next fa fa-angle-right",
+                on: { click: _vm.moveNextWeek },
+                model: {
+                  value: _vm.weeksMake,
+                  callback: function($$v) {
+                    _vm.weeksMake = $$v
+                  },
+                  expression: "weeksMake"
+                }
+              },
+              [_vm._v("→")]
+            )
+          ]
         )
       ]),
       _vm._v(" "),
