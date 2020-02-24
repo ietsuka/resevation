@@ -2,7 +2,7 @@
 <div id="overlay">
   <div id="content">
     <h1 class="title">予約登録</h1>
-    <p class="detail">予約内容は{{dateMake}}の{{time_low(time)}}でよろしいですか？</p>
+    <h2 class="detail">予約内容は{{dateMake}}の{{time_low(time)}}でよろしいですか？</h2>
     <div class="card-text">
       <div class="form-group">
         <label class="form" for="name">名前:</label>
@@ -55,7 +55,7 @@ export default {
       };
       axios.post(url, params)
       .then(function(response){
-
+        alert(response.date.result);
       })
       .catch(function(error){
 

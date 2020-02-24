@@ -1951,6 +1951,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2008,7 +2011,9 @@ __webpack_require__.r(__webpack_exports__);
       axios.post(url, params).then(function (response) {
         this.nums = response.data.nums;
         this.date = response.data.date;
-      }.bind(this))["catch"](function (error) {});
+      }.bind(this))["catch"](function (error) {
+        alert(error.message);
+      });
     },
     movePrevWeek: function movePrevWeek() {
       var url = '/api/post';
@@ -2019,7 +2024,9 @@ __webpack_require__.r(__webpack_exports__);
       axios.post(url, params).then(function (response) {
         this.nums = response.data.nums;
         this.date = response.data.date;
-      }.bind(this))["catch"](function (error) {});
+      }.bind(this))["catch"](function (error) {
+        alert(error.message);
+      });
     },
     showModal: function showModal(number, date, value) {
       if (!value) {
@@ -2036,7 +2043,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     select: function select(select_date) {
       var url = '/api/post';
-      console.log(select_date);
       var params = {
         date: select_date,
         direct: ''
@@ -2044,7 +2050,24 @@ __webpack_require__.r(__webpack_exports__);
       axios.post(url, params).then(function (response) {
         this.nums = response.data.nums;
         this.date = response.data.date;
-      }.bind(this))["catch"](function (error) {});
+      }.bind(this))["catch"](function (error) {
+        alert(error.message);
+      });
+    },
+    today: function today() {
+      var url = '/api/post';
+      var today = dayjs__WEBPACK_IMPORTED_MODULE_2___default()().format('YYYY/MM/DD');
+      console.log(today);
+      var params = {
+        date: today,
+        direct: ''
+      };
+      axios.post(url, params).then(function (response) {
+        this.nums = response.data.nums;
+        this.date = response.data.date;
+      }.bind(this))["catch"](function (error) {
+        alert(error.message);
+      });
     }
   },
   computed: {
@@ -2143,7 +2166,9 @@ __webpack_require__.r(__webpack_exports__);
         name: this.name,
         email: this.email
       };
-      axios.post(url, params).then(function (response) {})["catch"](function (error) {});
+      axios.post(url, params).then(function (response) {
+        alert(response.date.result);
+      })["catch"](function (error) {});
       this.resetForm();
       this.$emit('from-child');
     },
@@ -2213,7 +2238,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".calendar-title {\n  font-family: fantasy;\n  text-align: center;\n  height: 60px;\n  font-size: 35px;\n}\n.calendar-content {\n  text-align: center;\n  height: 45px;\n  font-size: larger;\n  display: contents;\n}\n.calendar-content .calendar-function {\n  display: -webkit-inline-box;\n  display: inline-flex;\n  margin: 0px 382px;\n}\n.calendar-content p {\n  font-family: monospace;\n}\n.calendar-content button {\n  width: 25px;\n  height: 20px;\n  margin-top: 17px;\n}\n#search {\n  margin-left: auto;\n}\n#search .menu {\n  position: relative;\n  width: 460px;\n  height: 0px;\n  max-width: 1000px;\n  margin: 0 auto;\n}\n#button {\n  margin-right: auto;\n}\n.menu > li {\n  border-radius: 5px;\n  float: left;\n  width: 25%;\n  height: 50px;\n  line-height: 50px;\n  background: #3c6699;\n  list-style: none;\n}\n.menu > li a {\n  display: block;\n  color: #fff;\n  text-decoration: none;\n}\n.menu > li a:hover {\n  color: #fff;\n}\nul.menu__second-level {\n  visibility: hidden;\n  opacity: 0;\n  z-index: 1;\n  list-style: none;\n  height: auto;\n  max-height: 500px;\n  overflow-x: scroll;\n}\n.menu > li:hover {\n  background: #3c6699;\n  -webkit-transition: all 0.5s;\n  transition: all 0.5s;\n}\n.menu__second-level li {\n  border-top: 1px solid #258;\n}\n.menu__second-level li a:hover {\n  background: #3c6699;\n}\n.init-bottom:after {\n  content: '';\n  display: inline-block;\n  width: 6px;\n  height: 6px;\n  margin: 0 0 0 15px;\n  border-right: 1px solid #fff;\n  border-bottom: 1px solid #fff;\n  -webkit-transform: rotate(45deg);\n  transform: rotate(45deg);\n}\n/* floatクリア */\n.menu:before,\n.menu:after {\n  content: \" \";\n  display: table;\n}\n.menu:after {\n  clear: both;\n}\n.menu {\n  *zoom: 1;\n}\n.menu {\n  position: relative;\n  width: 100%;\n  height: 50px;\n  max-width: 1000px;\n  margin: 0 auto;\n}\n.menu > li.menu__single {\n  position: relative;\n  width: 120px;\n}\nli.menu__single ul.menu__second-level {\n  position: absolute;\n  top: 40px;\n  width: 100%;\n  background: #3c6699;\n  -webkit-transition: all 0.2s ease;\n  transition: all 0.2s ease;\n  padding-left: unset;\n}\nli.menu__single:hover ul.menu__second-level {\n  top: 50px;\n  visibility: visible;\n  opacity: 1;\n  color: #fff;\n}\n.calendar-body {\n  width: 100%;\n  table-layout: fixed;\n  margin-bottom: 20px;\n  color: #565656;\n  font-size: 1.1rem;\n  text-align: center;\n}\n.calendar-body__item {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n}\n.calendar-body__item th {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 12px;\n  border: 1px solid #3c6699;\n  background: -webkit-gradient(linear, left top, left bottom, from(#829ebc), to(#258));\n  background: linear-gradient(#829ebc, #258);\n  color: #fff;\n  border-radius: 5px;\n  font-family: monospace;\n}\n.calendar-body__item th td {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 17px;\n  border: ridge;\n}\n.calendar-detail {\n  width: 100%;\n  table-layout: fixed;\n  margin-bottom: 20px;\n  color: #565656;\n  font-size: 1.1rem;\n  text-align: center;\n}\n.calendar-detail__item {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n  font-family: monospace;\n}\n.calendar-detail__item td {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 20px;\n  border: 1px solid #1b2538;\n  border-radius: 5px;\n}\n", ""]);
+exports.push([module.i, ".calendar-title {\n  font-family: fantasy;\n  text-align: center;\n  height: 60px;\n  font-size: 35px;\n}\n.calendar-content {\n  text-align: center;\n  height: 45px;\n  font-size: larger;\n  display: contents;\n}\n.calendar-content .calendar-function {\n  display: -webkit-inline-box;\n  display: inline-flex;\n  margin: 0px 382px;\n}\n#search {\n  margin-left: auto;\n}\n#search .menu {\n  position: relative;\n  width: 460px;\n  height: 0px;\n  max-width: 1000px;\n  margin: 0 auto;\n}\n#button {\n  margin-right: auto;\n}\n#today {\n  margin-right: auto;\n  height: 50px;\n  margin-left: 300px;\n}\np {\n  font-family: monospace;\n  background: -webkit-gradient(linear, left top, left bottom, from(#829ebc), to(#258));\n  background: linear-gradient(#829ebc, #258);\n  color: #fff;\n  border-radius: 5px;\n  padding-top: 15px;\n  margin: 0px;\n}\n.btn-monthMove {\n  background: -webkit-gradient(linear, left top, left bottom, from(#829ebc), to(#258));\n  background: linear-gradient(#829ebc, #258);\n  height: 50px;\n  color: #fff;\n  font-size: large;\n  font-family: fantasy;\n  border-radius: 5px;\n  padding-top: 10px;\n}\n.btn-today {\n  background: -webkit-gradient(linear, left top, left bottom, from(#829ebc), to(#258));\n  background: linear-gradient(#829ebc, #258);\n  height: 50px;\n  width: 70px;\n  color: #fff;\n  font-size: large;\n  font-family: monospace;\n  border-radius: 5px;\n  padding-top: 7px;\n}\n.menu > li {\n  border-radius: 5px;\n  float: left;\n  width: 25%;\n  height: 50px;\n  line-height: 50px;\n  background: -webkit-gradient(linear, left top, left bottom, from(#829ebc), to(#258));\n  background: linear-gradient(#829ebc, #258);\n  list-style: none;\n  font-family: fantasy;\n  margin-top: 4px;\n}\n.menu > li a {\n  display: block;\n  color: #fff;\n  text-decoration: none;\n  padding-top: 4px;\n}\n.menu > li a:hover {\n  color: #fff;\n}\nul.menu__second-level {\n  visibility: hidden;\n  opacity: 0;\n  z-index: 1;\n  list-style: none;\n  height: auto;\n  max-height: 500px;\n  overflow-x: scroll;\n}\n.menu > li:hover {\n  background: -webkit-gradient(linear, left top, left bottom, from(#829ebc), to(#258));\n  background: linear-gradient(#829ebc, #258);\n  -webkit-transition: all 0.5s;\n  transition: all 0.5s;\n}\n.menu__second-level li {\n  border-top: 1px solid #258;\n}\n.menu__second-level li a:hover {\n  background: -webkit-gradient(linear, left top, left bottom, from(#829ebc), to(#258));\n  background: linear-gradient(#829ebc, #258);\n}\n.init-bottom:after {\n  content: '';\n  display: inline-block;\n  width: 6px;\n  height: 6px;\n  margin: 0 0 0 15px;\n  border-right: 1px solid #fff;\n  border-bottom: 1px solid #fff;\n  -webkit-transform: rotate(45deg);\n  transform: rotate(45deg);\n}\n/* floatクリア */\n.menu:before,\n.menu:after {\n  content: \" \";\n  display: table;\n}\n.menu:after {\n  clear: both;\n}\n.menu {\n  *zoom: 1;\n}\n.menu {\n  position: relative;\n  width: 100%;\n  height: 50px;\n  max-width: 1000px;\n  margin: 0 auto;\n}\n.menu > li.menu__single {\n  position: relative;\n  width: 120px;\n}\nli.menu__single ul.menu__second-level {\n  position: absolute;\n  top: 40px;\n  width: 100%;\n  background: #3c6699;\n  -webkit-transition: all 0.2s ease;\n  transition: all 0.2s ease;\n  padding-left: unset;\n}\nli.menu__single:hover ul.menu__second-level {\n  top: 50px;\n  visibility: visible;\n  opacity: 1;\n  color: #fff;\n}\n.calendar-body {\n  width: 100%;\n  table-layout: fixed;\n  margin-bottom: 20px;\n  color: #565656;\n  font-size: 1.1rem;\n  text-align: center;\n}\n.calendar-body__item {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n}\n.calendar-body__item th {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 12px;\n  border: 1px solid #3c6699;\n  background: -webkit-gradient(linear, left top, left bottom, from(#829ebc), to(#258));\n  background: linear-gradient(#829ebc, #258);\n  color: #fff;\n  border-radius: 5px;\n  font-family: monospace;\n}\n.calendar-body__item th td {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 17px;\n  border: ridge;\n}\n.calendar-detail {\n  width: 100%;\n  table-layout: fixed;\n  margin-bottom: 20px;\n  color: #565656;\n  font-size: 1.1rem;\n  text-align: center;\n}\n.calendar-detail__item {\n  display: -webkit-box;\n  display: flex;\n  flex-wrap: wrap;\n  font-family: monospace;\n}\n.calendar-detail__item td {\n  box-sizing: border-box;\n  width: 12.28%;\n  height: 48px;\n  min-height: 48px;\n  padding: 12px 0;\n  text-align: center;\n  cursor: pointer;\n  font-size: 20px;\n  border: 1px solid #1b2538;\n  border-radius: 5px;\n}\n", ""]);
 
 // exports
 
@@ -20567,7 +20592,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn-monthMove prev fa fa-angle-left",
+                staticClass: "btn-monthMove",
                 on: { click: _vm.movePrevWeek },
                 model: {
                   value: _vm.weeksMake,
@@ -20585,7 +20610,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn-monthMove next fa fa-angle-right",
+                staticClass: "btn-monthMove",
                 on: { click: _vm.moveNextWeek },
                 model: {
                   value: _vm.weeksMake,
@@ -20596,6 +20621,18 @@ var render = function() {
                 }
               },
               [_vm._v("→")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "calendar-function", attrs: { id: "today" } },
+          [
+            _c(
+              "button",
+              { staticClass: "btn-today", on: { click: _vm.today } },
+              [_vm._v("今日")]
             )
           ]
         )
@@ -20717,7 +20754,7 @@ var render = function() {
     _c("div", { attrs: { id: "content" } }, [
       _c("h1", { staticClass: "title" }, [_vm._v("予約登録")]),
       _vm._v(" "),
-      _c("p", { staticClass: "detail" }, [
+      _c("h2", { staticClass: "detail" }, [
         _vm._v(
           "予約内容は" +
             _vm._s(_vm.dateMake) +

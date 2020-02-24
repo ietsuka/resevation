@@ -15,9 +15,12 @@
       </ul>
     </div>
     <div class="calendar-function" id="button">
-      <button class="btn-monthMove prev fa fa-angle-left" v-model="weeksMake"  v-on:click="movePrevWeek">←</button>
+      <button class="btn-monthMove" v-model="weeksMake"  v-on:click="movePrevWeek">←</button>
       <p>{{weeksMake}}</p>
-      <button class="btn-monthMove next fa fa-angle-right" v-model="weeksMake" v-on:click="moveNextWeek">→</button>
+      <button class="btn-monthMove" v-model="weeksMake" v-on:click="moveNextWeek">→</button>
+    </div>
+    <div class="calendar-function" id="today">
+      <button class="btn-today" v-on:click="today">今日</button>
     </div>
   </div>
   <div class="calendar-body">
@@ -98,7 +101,7 @@
           this.date = response.data.date;
         }.bind(this))
         .catch(function(error){
-
+          alert(error.message);
         });
       },
       movePrevWeek(){
@@ -113,7 +116,7 @@
           this.date = response.data.date;
         }.bind(this))
         .catch(function(error){
-
+          alert(error.message);
         });
       },
       showModal(number, date, value){
@@ -131,7 +134,6 @@
       },
       select(select_date){
         var url = '/api/post';
-        console.log(select_date);
         var params = {
           date: select_date,
           direct: ''
@@ -142,7 +144,24 @@
           this.date = response.data.date;
         }.bind(this))
         .catch(function(error){
-
+          alert(error.message);
+        });
+      },
+      today(){
+        var url = '/api/post';
+        var today = dayjs().format('YYYY/MM/DD');
+        console.log(today);
+        var params = {
+          date: today,
+          direct: ''
+        };
+        axios.post(url, params)
+        .then(function(response){
+          this.nums = response.data.nums;
+          this.date = response.data.date;
+        }.bind(this))
+        .catch(function(error){
+          alert(error.message);
         });
       }
     },
@@ -194,14 +213,6 @@
     display: inline-flex;
     margin: 0px 382px;
   }
-  p{
-    font-family: monospace;
-  }
-  button {
-    width: 25px;
-    height: 20px;
-    margin-top: 17px;
-  }
 }
 #search{
     margin-left auto;
@@ -219,20 +230,59 @@
   margin-right auto;
 }
 
+#today{
+  margin-right: auto;
+  height: 50px;
+  margin-left: 300px;
+}
+
+p{
+  font-family: monospace;
+  background: linear-gradient(#829ebc, #258);
+  color: white;
+  border-radius: 5px;
+  padding-top: 15px;
+  margin 0px;
+}
+
+.btn-monthMove{
+  background: linear-gradient(#829ebc, #258);
+  height: 50px;
+  color: white;
+  font-size: large;
+  font-family: fantasy;
+  border-radius: 5px;
+  padding-top: 10px;
+}
+
+.btn-today{
+  background: linear-gradient(#829ebc, #258);
+  height: 50px;
+  width: 70px;
+  color: white;
+  font-size: large;
+  font-family: monospace;
+  border-radius: 5px;
+  padding-top: 7px;
+}
+
 .menu > li {
     border-radius: 5px;
     float: left;
     width: 25%;
     height: 50px;
     line-height: 50px;
-    background: #3c6699;
+    background: linear-gradient(#829ebc,#225588);
     list-style: none;
+    font-family: fantasy;
+    margin-top: 4px;
 }
 
 .menu > li a {
     display: block;
     color: #fff;
     text-decoration: none;
+    padding-top: 4px;
 }
 
 .menu > li a:hover {
@@ -250,7 +300,7 @@ ul.menu__second-level {
 }
 
 .menu > li:hover {
-    background: #3c6699;
+    background: linear-gradient(#829ebc,#225588);
     -webkit-transition: all .5s;
     transition: all .5s;
 }
@@ -260,7 +310,7 @@ ul.menu__second-level {
 }
 
 .menu__second-level li a:hover {
-    background: #3c6699;
+    background: linear-gradient(#829ebc,#225588);
 }
 
 .init-bottom:after {

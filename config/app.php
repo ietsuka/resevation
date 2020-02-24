@@ -175,6 +175,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\UtilServiceProvider::class,
+        App\Providers\SendMailServiceProvider::class,
+        App\Providers\LoggerServiceProvider::class,
 
     ],
 
@@ -228,6 +230,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Util' => App\Facades\Util::class,
+        'SendMail' => App\Facades\SendMail::class,
+        'Logger' => App\Facades\Logger::class,
 
     ],
 
