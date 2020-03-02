@@ -10,3 +10,11 @@
 [2020-02-22 15:08:40]ゼロによる除算。
 [2020-02-22 15:09:05]ゼロによる除算。
 [2020-02-24 08:15:49]ゼロによる除算。
+[2020-02-25 10:10:14]SQLSTATE[HY000] [2002] Connection refused (SQL: select `reserved_date` from `reserved_infos` where `reserved_date` between 2020/02/25 and 2020/03/03)
+[2020-02-27 13:36:42]SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect date value: '2020/2/30' for column 'reserved_date' at row 1 (SQL: insert into `reserved_infos` (`name`, `reserved_date`, `reserved_time`, `price`, `mail_address`, `updated_at`, `created_at`) values (家塚, 2020/2/30, 4, 3000, ietsuka0265@gmail.com, 2020-02-27 13:36:42, 2020-02-27 13:36:42))
+[2020-02-27 13:37:54]SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect date value: '2020/2/30' for column 'reserved_date' at row 1 (SQL: insert into `reserved_infos` (`name`, `reserved_date`, `reserved_time`, `price`, `mail_address`, `updated_at`, `created_at`) values (家塚, 2020/2/30, 5, 3000, ietika0265@gmail.com, 2020-02-27 13:37:54, 2020-02-27 13:37:54))
+[2020-02-27 13:44:17]SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect date value: '2020-2-30' for column 'reserved_date' at row 1 (SQL: insert into `reserved_infos` (`name`, `reserved_date`, `reserved_time`, `price`, `mail_address`, `updated_at`, `created_at`) values (梅田, 2020-2-30, 4, 3000, ietsuka0265@gmail.com, 2020-02-27 13:44:17, 2020-02-27 13:44:17))
+[2020-02-27 13:49:22]SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect date value: '2020/2/30' for column 'reserved_date' at row 1 (SQL: insert into `reserved_infos` (`name`, `reserved_date`, `reserved_time`, `price`, `mail_address`, `updated_at`, `created_at`) values (中林, 2020/2/30, 4, 3000, ietsuka0265@gmail.com, 2020-02-27 13:49:22, 2020-02-27 13:49:22))
+[2020-02-29 12:39:58]SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect date value: '2020/2/32' for column 'reserved_date' at row 1 (SQL: insert into `reserved_infos` (`name`, `reserved_date`, `reserved_time`, `price`, `mail_address`, `updated_at`, `created_at`) values (梅田, 2020/2/32, 4, 3000, ietsuka0265@gmail.com, 2020-02-29 12:39:58, 2020-02-29 12:39:58))
+[2020-03-01 11:09:20]The given data was invalid.
+[2020-03-02 10:23:16]The given data was invalid.

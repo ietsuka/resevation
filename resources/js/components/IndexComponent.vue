@@ -35,6 +35,9 @@
       </tr>
     </tr>
   </div>
+  <div>
+      <button class="csv_button" v-on:click="csv">CSV書き出し</button>
+  </div>
   <modal-component v-show="showContent" v-on:from-child="closeModal" :date=positionDate :time=positionTime :startDate=date></modal-component>
 </div>
 </template>
@@ -150,7 +153,6 @@
       today(){
         var url = '/api/post';
         var today = dayjs().format('YYYY/MM/DD');
-        console.log(today);
         var params = {
           date: today,
           direct: ''
@@ -163,6 +165,29 @@
         .catch(function(error){
           alert(error.message);
         });
+      },
+      csv(){
+        var url = '/api/csv';
+        var today = dayjs().format('YYYY/MM/DD');
+        var params = {
+          date: today,
+        };
+        axios.post(url, params)
+        .then(function(response){
+          this.saveCsvFile(response)
+        }.bind(this))
+        .catch(function(error){
+          alert(error.message);
+        });
+      },
+      saveCsvFile(res){
+        var blob = new Blob(['\ufeff' + res.data], { type: 'text/csv' })
+        const url = window.URL.createObjectURL(blob)
+        const link = document.createElement('a')
+        var filename = dayjs().format('YYYY/MM/DD');
+        link.href = url
+        link.setAttribute('download', filename)
+        link.click()
       }
     },
     computed:{
@@ -206,43 +231,38 @@
 }
 .calendar-content{
   text-align: center;
-  height: 45px;
   font-size: larger;
   display: contents;
+  display: flex;
+  justify-content: space-between;
   .calendar-function{
-    display: inline-flex;
-    margin: 0px 382px;
+    
   }
 }
 #search{
-    margin-left auto;
-
     .menu {
-    position: relative;
-    width: 460px;
-    height: 0px;
-    max-width: 1000px;
-    margin: 0 auto;
+
 }
 
 }
 #button{
-  margin-right auto;
+  display: flex;
+  justify-content: space-between;
 }
 
 #today{
-  margin-right: auto;
-  height: 50px;
-  margin-left: 300px;
+  margin-right: 70px;
 }
 
 p{
   font-family: monospace;
+  font-size: larger;
   background: linear-gradient(#829ebc, #258);
   color: white;
   border-radius: 5px;
   padding-top: 15px;
   margin 0px;
+  height: 35px;
 }
 
 .btn-monthMove{
@@ -268,18 +288,15 @@ p{
 
 .menu > li {
     border-radius: 5px;
-    float: left;
-    width: 25%;
     height: 50px;
     line-height: 50px;
     background: linear-gradient(#829ebc,#225588);
     list-style: none;
-    font-family: fantasy;
-    margin-top: 4px;
+    font-family: monospace;
 }
 
 .menu > li a {
-    display: block;
+    font-size: larger;
     color: #fff;
     text-decoration: none;
     padding-top: 4px;
@@ -326,30 +343,10 @@ ul.menu__second-level {
     transform: rotate(45deg);
 }
 
-/* floatクリア */
-.menu:before,
-.menu:after {
-    content: " ";
-    display: table;
-}
-
-.menu:after {
-    clear: both;
-}
-
-.menu {
-    *zoom: 1;
-}
-.menu {
-  position: relative;
-  width: 100%;
-  height: 50px;
-  max-width: 1000px;
-  margin: 0 auto;
-}
 .menu > li.menu__single {
     position: relative;
     width 120px;
+    margin-top: -18px;
 }
 
 li.menu__single ul.menu__second-level {
@@ -433,5 +430,14 @@ li.menu__single:hover ul.menu__second-level {
       border-radius: 5px;
     }
   }
+}
+
+.csv_button{
+  background: linear-gradient(#829ebc, #258);
+  height: 50px;
+  color: white;
+  font-size: large;
+  font-family: monospace;
+  border-radius: 5px;
 }
 </style>

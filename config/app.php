@@ -177,6 +177,7 @@ return [
         App\Providers\UtilServiceProvider::class,
         App\Providers\SendMailServiceProvider::class,
         App\Providers\LoggerServiceProvider::class,
+        App\Providers\CreateCsvServiceProvider::class,
 
     ],
 
@@ -232,6 +233,7 @@ return [
         'Util' => App\Facades\Util::class,
         'SendMail' => App\Facades\SendMail::class,
         'Logger' => App\Facades\Logger::class,
+        'CreateCsv' => App\Facades\CreateCsv::class,
 
     ],
 
