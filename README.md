@@ -13,4 +13,7 @@
 ## 概要
 * 予定を入れれるシステムです。
 * 予定内容をcsvで出力可能です。
+## 詳細動画
+![reserve-app](https://user-images.githubusercontent.com/47805919/92617664-7e201900-f2fa-11ea-816d-2243f308ff4c.gif)
+
 
